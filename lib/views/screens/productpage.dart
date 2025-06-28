@@ -6,6 +6,8 @@ import '../../models/productsmodel.dart';
 import '../../widgets/common_widget.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Productpage extends StatefulWidget {
   const Productpage({super.key});
@@ -81,15 +83,27 @@ class _ProductpageState extends State<Productpage>  with WidgetsBindingObserver{
                                       width: 70.w,
                                       height: 25.h,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              10),
-                                          color: Colors.white
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white,
                                       ),
-                                      child: Image.network(
-                                        product.image,
+                                      child: CachedNetworkImage(
+                                        imageUrl: product.image,
                                         width: 70.w,
                                         height: 25.h,
                                         fit: BoxFit.contain,
+                                        placeholder: (context, url) => Shimmer.fromColors(
+                                          baseColor: Colors.grey.shade300,
+                                          highlightColor: Colors.grey.shade100,
+                                          child: Container(
+                                            width: 70.w,
+                                            height: 25.h,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) => const Icon(Icons.error),
                                       ),
                                     ),
                                     Positioned(
