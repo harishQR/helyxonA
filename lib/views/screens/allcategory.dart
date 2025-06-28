@@ -5,8 +5,10 @@ import 'package:helyxon/constant/text.dart';
 import 'package:helyxon/widgets/common_widget.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../controllers/productshowcontroller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
+
 class Allcategory extends StatefulWidget {
   const Allcategory({super.key});
 
@@ -101,12 +103,22 @@ class _AllcategoryState extends State<Allcategory> {
                                                 ),
                                               ),
                                               child: Center(
-                                                child: Image.network(
-                                                  prdttctr.categoryImages[category] ??
+                                                child: CachedNetworkImage(
+                                                  imageUrl: prdttctr.categoryImages[category] ??
                                                       'https://via.placeholder.com/100',
                                                   width: 10.w,
                                                   height: 7.h,
                                                   fit: BoxFit.fill,
+                                                  placeholder: (context, url) => Shimmer.fromColors(
+                                                    baseColor: Colors.grey.shade300,
+                                                    highlightColor: Colors.grey.shade100,
+                                                    child: Container(
+                                                      width: 10.w,
+                                                      height: 7.h,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  errorWidget: (context, url, error) =>  Icon(Icons.error),
                                                 ),
                                               ),
                                             ),
@@ -145,7 +157,7 @@ class _AllcategoryState extends State<Allcategory> {
                                   },
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.3.h),
-                                    hintText: "Search Category",
+                                    hintText: "Search Products",
                                     hintStyle: TextStyle(fontSize: 18.sp, color: Colors.grey),
                                     suffixIcon: Icon(Icons.search, color: Colors.black),
                                     border: InputBorder.none,
@@ -220,11 +232,21 @@ class _AllcategoryState extends State<Allcategory> {
                                                             decoration: BoxDecoration(
                                                               borderRadius: BorderRadius.circular(10),
                                                             ),
-                                                            child: Image.network(
-                                                              product.image,
+                                                            child: CachedNetworkImage(
+                                                              imageUrl: product.image,
                                                               width: 30.w,
                                                               height: 12.h,
                                                               fit: BoxFit.contain,
+                                                              placeholder: (context, url) => Shimmer.fromColors(
+                                                                baseColor: Colors.grey.shade300,
+                                                                highlightColor: Colors.grey.shade100,
+                                                                child: Container(
+                                                                  width: 30.w,
+                                                                  height: 12.h,
+                                                                  color: Colors.white,
+                                                                ),
+                                                              ),
+                                                              errorWidget: (context, url, error) => const Icon(Icons.error),
                                                             ),
                                                           ),
                                                           Positioned(
